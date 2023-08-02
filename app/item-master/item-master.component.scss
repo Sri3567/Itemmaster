@@ -1,0 +1,108 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.box{
+    width: 100%;
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(167, 167, 167) !important;
+    padding: 20px;
+    margin-top: 10px;
+    box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.2);
+    border-radius: 5px;
+
+
+}
+.btns{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    // margin-bottom: 200px !important;
+}
+.btns button{
+    margin-left: 10px;
+}
+.col-md-4{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.submit{
+    background-color: #2d243b !important;
+    color: #ffff !important;
+}
+.clear{
+    background-color: #f01e1e !important;
+    color: #ffff !important;
+}
+.example-margin{
+    width: 200px !important;
+    height: auto;
+}
+
+table th,td{
+    border: 1px solid rgb(78, 54, 54);
+
+}
+// .tableres{
+//     width: 100%;
+//     height: 50vh;
+// }
+.bts{
+    
+    float: right;
+    
+}
+th{
+    position: sticky;
+
+}
+// .example-container {
+//     height: 400px;
+//     overflow: auto;
+//   }
+  
+  table {
+    width: 100%;
+  }
+
+  .grid{
+    width: 100%;
+    // height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.table2{
+    margin-left: 50px;
+}
+.table th{
+    background-color: #f3f1ef;
+    vertical-align: inherit;
+    border-style: groove;
+    letter-spacing: 2px;
+    text-align: center;
+}
+.table td{
+    text-align: center;
+}
+
+.forme{
+    border: 2px solid rgb(235, 57, 34);
+    width: 100%;
+    height: auto;
+    box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.but{
+    border-radius: 30px;
+}
+
+mat-checkbox ::ng-deep .mat-checkbox-inner-container {width: 30px;height: 30px;}
+

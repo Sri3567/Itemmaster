@@ -1,0 +1,35 @@
+
+<div class="container">
+    <div class="row">
+
+        <h1 style="color:orangered;">Add Tax Percentage</h1>
+
+        <div class="col-md-6 ">
+            <mat-form-field appearance="outline" style="width:100%" >
+                <mat-label>Tax Percentage</mat-label>
+                <input matInput placeholder="Tax Percentage" type="number" [(ngModel)]="percentage" required 
+                      min="0" max="100" step="0.01">
+                <mat-icon matSuffix>perso</mat-icon>
+            </mat-form-field>
+        </div>
+        <!-- <div class="col-md-6 ">
+            <mat-form-field appearance="outline" >
+                <mat-label>Tax discription</mat-label>
+                <input matInput placeholder="Tax Percentage" type="text" [(ngModel)]="taxPercentage" required
+                    pattern="[A-Za-z0-9]*" minlength="1" maxlength="50" align="center">
+                <mat-icon matSuffix>perso</mat-icon>
+            </mat-form-field>
+        </div> -->
+       
+        <div class="col-md-12">
+            <mat-dialog-actions align="end">
+                <button mat-raised-button color="primary" (click)="onAddClick()" >Add</button>
+                <button  mat-raised-button color="warn" (click)="onCancelClick()">Cancel</button>
+                
+            </mat-dialog-actions>
+        </div>
+    </div>
+</div>
+
+
+

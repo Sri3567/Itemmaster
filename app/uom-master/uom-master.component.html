@@ -1,0 +1,28 @@
+
+<div class="container">
+    <div class="row">
+        <h1 style="color:orangered;">UOM MASTER</h1>
+        <div class="col-md-6 mt-4" >
+            <mat-form-field appearance="outline">
+                <mat-label>uom code</mat-label>
+                <input matInput placeholder="plate" required pattern="[A-Za-z0-9]*"  minlength="1" maxlength="15" [(ngModel)]="model.UOMCode" name="UOMCode">
+                <mat-icon matSuffix>perso</mat-icon>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6 mt-4">
+            <mat-form-field appearance="outline">
+                <mat-label>uom discription</mat-label>
+                <input matInput placeholder="plate" required pattern="[A-Za-z0-9]*" minlength="1" maxlength="15"[(ngModel)]="model.UOMDesc" name="UOMDesc">
+                <mat-icon matSuffix>perso</mat-icon>
+            </mat-form-field>
+        </div>
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+            <mat-dialog-actions align="end">
+                <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+                <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+            </mat-dialog-actions>
+        
+        </div>
+    </div>
+</div>

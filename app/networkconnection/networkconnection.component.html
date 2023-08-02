@@ -1,0 +1,11 @@
+<div *ngIf="isOnline; else offlineTemplate">
+    <!-- Display green tick if online -->
+   <h2> <img src="../assets/right.jpeg" alt="Online" > Working</h2>
+   
+  </div>
+  
+  <ng-template #offlineTemplate>
+    <!-- Display red crossed logo if offline -->
+    <h3><img src="../assets/ronge.jpeg" alt="Offline">Error</h3>
+    
+  </ng-template>

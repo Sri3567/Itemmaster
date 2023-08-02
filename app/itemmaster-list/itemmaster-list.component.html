@@ -1,0 +1,159 @@
+<mat-toolbar color="primary">
+    <span>ITEM MASTER LIST</span>
+    <span class="example-spacer"></span>
+  </mat-toolbar>
+
+<section class="content">
+    <div class="container-fluid content-header sticky-top">
+      <div class="col-md-12">
+        <!-- Horizontal Form -->
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+               
+              </div>
+              <div class="col-sm-6 p-5" >
+                <button 
+                style="float: right "
+                (click)="onCreate()"
+                class="btn btn-lg btnAdd"
+                mat-raised-button
+                color="primary"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+                &nbsp;&nbsp;&nbsp;
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+
+            <div class="box box-primary">
+                <!-- Default box -->
+                <div class="container-fluid" >
+                  <div class="card" >
+                    <div class="card-body" >
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <input
+                              type="text"
+                              required
+                              id="Filter"                  
+                              class="form-control"
+                              placeholder="search"
+                              (keyup)="applyFilter($event)"
+                              #input
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+
+            <div class="container-fluid p-5 " >
+                <div class="row grid">
+                <div class="row px-5 mx-5">
+                 <div class="col-md-12 mx-5 table2">
+                  <table  class="table table-head-fixed table-hover table-striped" mat-table [dataSource]="dataSource"  matSort>
+                    <ng-container matColumnDef="itemdescription">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        ITEM DESCRIPTION
+                      </th>
+                      <td mat-cell *matCellDef="let row">{{row.itemdescription}}</td>
+                    </ng-container>
+                   
+                    <ng-container matColumnDef="uom">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        UOM
+                      </th>
+                      <td mat-cell *matCellDef="let row">{{row.Uom}}</td>
+                    </ng-container>
+            
+                      <ng-container matColumnDef="tax">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                          TAX
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.itemtax}}</td>
+                      </ng-container>
+                    <ng-container matColumnDef="creationdate">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                       CREATION DATE
+                      </th>
+                      <td mat-cell *matCellDef="let row">{{row.creationdate | date: 'dd/MM/yyyy'}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                       ACTION
+                      </th>
+                      <td mat-cell *matCellDef="let row" class="p-2" >
+                        <button class="btns  Info"  matTooltip="Edit" value="row.itemdescription" color="primary" [disabled]="row.Void=='Y'" (click)="edit(row)" ><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button  class="btn text-danger"  matTooltip="Void" value="row.itemdescription" color="warn" *ngIf="row.Void=='N'"   (click)="Void(row)" ><i class="fa-solid fa-trash"></i></button>
+                        <button  class="btn text-danger"  matTooltip="UnVoid" value="row.itemdescription" color="warn"  *ngIf="row.Void=='Y'"  (click)="UnVoid(row)" ><i class="fa-solid fa-trash-restore"></i></button>
+                        <!-- <td mat-cell *matCellDef="let row"> -->
+                          <!-- <div >
+                            <button  
+                              class="btns btnEdit" style="float: left" type="button" (click)="edit(row)" 
+                              matTooltip="Edit Record" >
+                              <i class="fa fa-edit" aria-hidden="true"></i>
+                            </button>
+    
+                            <button class="btns btnDelete" style="float: left"
+                              type="button" (click)="Void(response)" matTooltip="Delete Record">
+                              <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                          <div >
+                            <button class="btns btnEdit" type="button"  disabled
+                             matTooltip="Edit Record">
+                              <i class="fa fa-edit" aria-hidden="true"></i>
+                            </button>
+    
+                            <button  class="btns btnDelete" color="success" type="button"
+                              (click)="UnVoid(response)" matTooltip="Unvoid Record">
+                              <i class="fa fa-trash-restore" aria-hidden="true"></i>
+                            </button>
+    
+                             
+                          </div> -->
+                        </td>
+            
+                      
+                    </ng-container>
+            
+            
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell" colspan="5">
+                        <!-- No data matching the filter "{{ input.value }}" -->
+                      </td>
+                    </tr>
+                  </table>
+            
+                  <mat-paginator [pageSizeOptions]="[4, 8, 12, 18]"></mat-paginator>
+                 </div>
+                </div>
+                </div>
+              </div>
+      <!-- <div class="conatiner">
+        <div class="row">
+          <div class="col-md-3">
+            <ul *ngFor="let d of dataload">
+              <li>{{d.itemdescription}}</li>
+            </ul>
+          </div>
+        </div>
+      </div> -->
+<div align="end">
+      <button type="button" class="btn btn-outline-success"  (click)="AllExportExcel()">EXCEL</button>
+    </div>
+
+    

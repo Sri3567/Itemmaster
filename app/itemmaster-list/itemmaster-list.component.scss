@@ -1,0 +1,31 @@
+// .btn {
+//     border: 1px solid black;
+//     background-color: rgb(84, 84, 141);
+//     color: white;
+//     padding: 14px 28px;
+//     font-size: 16px;
+//     cursor: pointer;
+//   }
+
+  .info {
+    border-color: #2196F3;
+    color: dodgerblue
+  }
+  
+  .info:hover {
+    background: #2196F3;
+    color: white;
+  }
+  .btns{
+    border: 0.5px solid black;
+    background-color: rgb(97, 185, 101);
+    color: rgb(20, 19, 17);
+    font-size: 15px;
+  }
+  
+  .card-body{
+    border: solid 3px red;
+    border-radius: 10px;
+    box-shadow: 10px 5px 5px gray;
+  }
+  

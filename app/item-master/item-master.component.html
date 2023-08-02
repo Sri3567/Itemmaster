@@ -1,0 +1,351 @@
+<mat-toolbar color="primary">
+  <span>ITEM MASTER </span>
+  <span class="example-spacer"></span>
+</mat-toolbar>
+<app-networkconnection></app-networkconnection>
+ 
+
+  <div class="container-fluid p-5">
+      <div class="row box px-5">
+        
+    <div mat-dialog-actions align="end">
+
+      
+      <button mat-stroked-button class="submit" color="primary" type="submit" *ngIf="isupdate == false"   (click)="onSubmit()" >
+        <i class="fa-solid fa-square-plus"></i>
+      </button>
+      <button mat-stroked-button class="submit" color="primary" type="submit"   *ngIf="isupdate == true" [disabled]="IsVoid == true"  (click)="onSubmit()" [disabled]="percentage"><i class="fa-solid fa-square-plus"></i></button>
+      <button mat-raised-button color="primary" class="mx-2" (click)="onClear()" ><i class="fa-solid fa-arrows-rotate"></i></button>
+      <!-- <button mat-raised-button class="px-5" color="warn"
+          *ngIf="isupdate == true && IsVoid == false" type="button"
+          (click)="onVoid()" [disabled]="percentage" ><i class="fa-solid fa-trash"></i></button>
+      <button mat-raised-button class="mx-2" color="warn"
+          *ngIf="isupdate == true && IsVoid == true" type="button"
+          (click)="onVoid()" [disabled]="percentage"><i class="fa-solid fa-trash"></i></button> -->
+  </div>
+
+        
+
+    <div class="col-md-6">
+      <div class="row">
+          <div class="col-md-6">
+              <mat-form-field appearance="outline">
+                  <mat-label>Item Description</mat-label>
+                  <input matInput type="text" required [typeahead]="itemlist" [(ngModel)]="model.itemdescription"
+                      name="itemdescription" pattern="[A-Za-z0-9]*"
+                      (typeaheadOnSelect)="onSelectcopy($event)" [disabled]="percentage">
+                    
+              </mat-form-field>
+              <!-- <mat-form-field appearance="outline"  >
+                  <mat-label>Item Description</mat-label>
+                  <input matInput required autocomplete="off" pattern="[A-Za-z0-9]*"  type="text" name="itemdescription" [typeahead]="itemlist"
+                  [(ngModel)]="model.itemdescription"   (typeaheadOnSelect)="onSelectcopy($event)"  />
+                </mat-form-field> -->
+          </div>
+
+
+
+          <div class="col-md-6">
+              <mat-form-field appearance="outline">
+                  <mat-label>UOM</mat-label>
+                  <mat-select required [(ngModel)]="model.Uom" name="Uom" [disabled]="percentage"  >
+                      <mat-option *ngFor="let web of UOMCode " [value]="web.UOMDesc">{{web.UOMDesc}}</mat-option>
+                      <mat-option value="Add" (click)="openDialog()"
+                          style="background-color: #007bff;text-decoration-color: floralwhite;">
+                          Add UOM
+                      </mat-option>
+
+                  </mat-select>
+              </mat-form-field>
+          </div>
+
+         
+         
+          
+          
+          
+          
+          
+
+          <!-- <div class="col-md- ">
+              <mat-form-field appearance="outline">
+                  <mat-label>Item Rate</mat-label>
+                  <input matInput type="number" required min="0" [(ngModel)]="model.itemrate" name="itemrate"
+                      (blur)="onbluritemrate($event)" />
+              </mat-form-field>
+          </div> -->
+
+          <!-- <div class="col-md-6">
+              <mat-form-field appearance="outline">
+                  <mat-label for="dropdown">Tax Percentage</mat-label>
+                  <input matInput type="number" required min="0"  max="99.99"  step="0.01"  pattern="[0-9.]*" [(ngModel)]="model.itemtax" name="itemtax"
+                      (blur)="onbluritemtax($event)" [disabled]="percentage" />
+                      
+              </mat-form-field>
+          </div> -->
+          <div class="col-md-6">
+            <mat-form-field appearance="outline">
+              <mat-label for="dropdown">Tax Percentage</mat-label>
+                <ng-container *ngIf="!isEditing; else editModeField">
+                    <mat-select required [(ngModel)]="model.itemtax" name="itemtax" [disabled]="percentage">
+                      <mat-option *ngFor="let result of taxes " [value]="result.percentage">{{result.percentage}}</mat-option>
+                      
+                  </mat-select>
+                </ng-container>
+                <ng-template #editModeField>
+                  <input matInput readonly type="number" min="0" max="99.99" step="0.01" pattern="[0-9.]*"   [(ngModel)]="result.percentage" name="percentage{{itemtax}}" >
+                </ng-template>
+          </mat-form-field>
+        </div>
+
+
+
+          <div class="col-md-6">
+              <mat-form-field appearance="outline">
+                  <mat-label>Open Item</mat-label>
+                  <mat-select required [(ngModel)]="model.openitem" name="openitem" [disabled]="percentage" >
+                      <mat-option value="Y">Yes</mat-option>
+                      <mat-option value="N">NO</mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+              <mat-form-field appearance="outline">
+                  <mat-label>Creation Date</mat-label>
+                  <input matInput type="date" [max]="MaxDate" required pattern="DD/MM/YYYY"
+                      [(ngModel)]="model.creationdate" name="creationdate" [disabled]="percentage" />
+              </mat-form-field>
+             
+          </div>
+          <!-- <div class="col-md-6">
+              <mat-form-field appearance="outline">
+                  <mat-label for="dropdown">Tax Percentage</mat-label>
+                  
+                        <mat-select required [(ngModel)]="model.tax" name="tax">
+                          <mat-option *ngFor="let web of options " [value]="web">{{web}}</mat-option>
+                          
+                      </mat-select>
+              </mat-form-field>
+          </div> -->
+          <!-- <div class="col-md-6">
+            <mat-form-field appearance="outline">
+              <mat-label for="tax">Tax Percentage</mat-label>
+              <input matInput type="number" min="0" max="100" step="0.01" [(ngModel)]="newTax" name="tax" />
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="addTax()">Add Tax</button>
+          </div> -->
+          <!-- <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Multi UOM</mat-label> -->
+                <!-- (selectionChange)="onChangemultiuom()" -->
+                <!-- <mat-select required [(ngModel)]="model.multiuom" name="openitem" [disabled]="percentage"  >
+                    <mat-option value="Y">Yes</mat-option>
+                    <mat-option value="N">NO</mat-option>
+
+                     
+                </mat-select>
+            </mat-form-field>
+        </div> -->
+        
+
+
+      </div>
+    </div> 
+    <div class="col-md-6"  style="overflow-y: scroll;max-height: 350px;">
+      <div class="table-responsive" >
+          <table class="table ">
+              <tr class="text-center">
+                <th  *ngFor="let header of tableHeaders">{{ header }}</th>
+                <!-- <th *ngIf="model.multiuom === 'Y'">ADD</th> -->
+                <th >
+                  <div> <button mat-raised-button color="primary" (click)="openDialogs()"[disabled]="percentage" ><i class="fa-solid  fa-plus"></i>
+                    </button></div>
+                </th>
+              </tr>
+              <tr  *ngFor="let web of model.POSItemGrid;let i = index;" >
+                  <td scope="row"><mat-form-field appearance="outline" >
+
+
+                          <input  matInput [(ngModel)]="web.poscode" name="poscode{{i}}" readonly type="text" [disabled]="percentage" />
+                      </mat-form-field></td>
+                  <td scope="row"> <mat-checkbox   [(ngModel)]="web.isChecked" name="isChecked{{i}}" (change)="isCheckedvoid($event,i) "[disabled]="percentage">
+                      </mat-checkbox>
+                       <br />
+                  </td>
+
+                  <td scope="row"> <mat-form-field appearance="outline">
+                          <input  matInput required type="number" min="0" 
+                               [(ngModel)]="web.rate" name="rate{{i}}" (blur)="onblurrate($event,i)" [disabled]="percentage"/>
+                      </mat-form-field></td>
+                      
+
+
+                    <!-- <td scope="row">
+                      <mat-form-field appearance="outline">
+                          <mat-select  required [(ngModel)]="web.uom" name="uom {{i}}" [disabled]="web.showoff">
+                              <mat-option *ngFor="let web of UOMCode " [value]="web.UOMDesc">{{web.UOMDesc}}</mat-option>
+                              <mat-option value="Add" (click)="openDialog()"
+                                  style="background-color: #007bff;text-decoration-color: floralwhite;">
+                                  Add UOM
+                              </mat-option> 
+      
+                          </mat-select>
+                      </mat-form-field> -->
+                      <!-- <td scope="row"> <mat-form-field appearance="outline">
+                        <input  matInput required type="number" min="0" 
+                            [disabled]="web.showoff" [(ngModel)]="web.tax" name="tax{{taxes}}"/>
+                    </mat-form-field></td>
+                   -->
+                    <!-- <td scope="row"> <mat-form-field appearance="outline">
+                      <input  matInput required type="text"  
+                          [disabled]="web.showoff" [(ngModel)]="web.tax" name="tax{{i}}"/>
+                  </mat-form-field></td> -->
+
+                  <!-- <td scop="row">
+                  <mat-form-field appearance="outline">
+                    <mat-label for="dropdown">Tax Percentage</mat-label>
+                      <ng-container *ngIf="!isEditing; else editModeField">
+                          <mat-select required [(ngModel)]="web.itemtax" name="itemtax{{i}}" [disabled]="web.showoff" (ngModelChange)="onTaxPercentageChange()"[disabled]="percentage">
+                            <mat-option *ngFor="let result of taxes " [value]="result.percentage">{{result.percentage}}</mat-option>
+                            
+                        </mat-select>
+                      </ng-container>
+                      <ng-template #editModeField>
+                        <input matInput readonly type="number" min="0" max="99.99" step="0.01" pattern="[0-9.]*"  [disabled]="web.showoff" [(ngModel)]="web.Tax" name="Tax{{i}}" >
+                      </ng-template>
+                </mat-form-field>
+              </td> -->
+            
+                  <!-- <td scope = "row">
+                  <mat-form-field appearance="outline">
+                    <mat-label for="dropdown">Tax Percentage</mat-label>
+                    
+                          <mat-select required [(ngModel)]="model.tax" name="tax">
+                            <mat-option *ngFor="let web of options " [value]="web">{{web}}</mat-option>
+                            
+                        </mat-select>
+                </mat-form-field>
+                </td> -->
+                <!-- <ng-container matColumnDef="taxes">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Taxes
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <span *ngFor="let tax of row.taxes">{{ tax }}% </span>
+                  </td>
+                </ng-container> -->
+            
+                   
+                    <!-- <td scope="row" *ngIf="model.multiuom  === 'Y'"> -->
+                     
+                      <!-- <button mat-raised-button color="primary"  (click)="addRow(i)" 
+                        style="color: white; border-color: white" [disabled]="web.showoff">
+                        <i class="fa fa-plus plusBtnSize" aria-hidden="true"></i>
+                        ADD
+                      </button>
+                    </td> -->
+                    <!-- <div class="example-button-container" align="center">
+                      <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon" (click)="addRow(i)" [disabled]="web.showoff" [disabled]="percentage" >
+                        <i class="fa-solid fa-plus"></i>
+                        
+                      </button>
+                    </div>
+                    </td> -->
+
+                    <!-- *ngIf="model.multiuom  === 'Y'" -->
+                    <td scope="row">
+                     
+                        <!-- <button mat-raised-button color="warn"  (click)="deleteNewRow(i)" 
+                          style="color: white; border-color: white" [disabled]="web.showoff">
+                          <i class="fa fa-plus plusBtnSize" aria-hidden="true"></i>
+                          Delete
+                        </button> -->
+                        <div class="example-button-container" align="center">
+                          <button mat-mini-fab color="warn" aria-label="Example icon button with a delete icon" (click)="deleteNewRow(i)" [disabled]="percentage"  >
+                            <i class="fa-solid fa-trash"></i>
+                          </button>
+                        </div>
+
+                        
+                      
+                    </td>
+                    
+                  
+              </tr>
+          </table>
+
+      </div>
+    </div>
+    <div class="col-md-12">
+  
+  
+                      
+      <div class="d-flex align-items-center justify-content-between mt-5">
+          <div class="">
+              <button mat-raised-button color="primary" value="Add" (click)="openDialogs()"[disabled]="percentage" >ADD
+                  POS</button>
+                  <button mat-raised-button color="primary" class="mx-2" (click)="openTax()">Feed
+                    Tax</button>
+
+
+          </div>
+         
+          <div mat-dialog-actions>
+
+              <!-- <button mat-raised-button class="submit mx-2" [disabled]="IsVoid == true"
+                  (click)="onSubmit()">{{_lable}}</button> -->
+              <button mat-stroked-button class="submit" color="primary" type="submit" *ngIf="isupdate == false"   (click)="onSubmit()" >SUBMIT</button>
+              <button mat-stroked-button class="submit" color="primary" type="submit"   *ngIf="isupdate == true" [disabled]="IsVoid == true"  (click)="onSubmit()" [disabled]="percentage">UPDATE</button>
+              <button mat-raised-button color="primary" class="mx-2" (click)="onClear()"  >ON CLEAR</button>
+              <!-- <button mat-raised-button class="px-5" color="warn"
+                  *ngIf="isupdate == true && IsVoid == false" type="button"
+                  (click)="onVoid()" [disabled]="percentage" >Void</button>
+              <button mat-raised-button class="mx-2" color="warn"
+                  *ngIf="isupdate == true && IsVoid == true" type="button"
+                  (click)="onVoid()" [disabled]="percentage" >Unvoid</button> -->
+          </div>
+
+      </div>
+
+  </div>
+      </div>
+      <div class="container-fluid p-5">
+        <div class="row">
+          
+            
+                <form class="forme p-3">
+                  <h3 style="color: rgb(95, 92, 92);" class="ms-2">Tax Percentage</h3>
+                
+                  <button  class=" but btn btn-outline-success px-4 py-2 ms-5" color="primary" *ngFor="let result of taxes " [value]="result.percentage">
+                    {{result.percentage}}
+
+                  </button>
+                
+              </form>
+
+                
+                
+
+        </div>
+      </div>
+
+      <div class="card-footer footerAlign ">
+        <button (click)="onBack()"  class="bts btn btn-mat-clear" mat-raised-button color="accent">
+            <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back
+        </button >
+
+
+     
+<!-- <div class="container">
+  <div class="row">
+    <mat-form-field class="example-full-width" appearance="outline">
+         
+      <input matInput placeholder="Search.." (keyup)="applyFilter($event)" [disabled]="percentage" >
+    </mat-form-field>
+  </div>
+</div> -->
+
+
+
+
